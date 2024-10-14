@@ -1,42 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Age Calculator</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="calculatrice.png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculateur d'age</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="calculatrice.png" />
     <header>
-        <nav>
-            <main>
-                <a href="index.html"><button class="btn-start">Home</button></a>
-            </main>
-        </nav>
+      <nav>
+        <main>
+          <a href="index.html"><button class="btn-start">Acceuil</button></a>
+        </main>
+      </nav>
     </header>
-</head>
-<body>
-    <p class="txt">Welcome, this page consists in calculating the precise age of a user.</p>
+  </head>
+  <body>
+    <p class="txt">
+      Bienvenue cette page permet de calculer son age précisement
+    </p>
     <!--Form to define user input-->
     <section class="userForm">
-        <form method="post" id="ageForm">
-            <div class="container">
-                <div class="userDate">
-                    <label for="name" class="yourName"><strong>Votre nom</strong></label>
-                    <input type="text" class="name" id="name" required><!--Name-->
-                    <label for="dateNaiss" class="yourNaiss"><strong>Date de naissance</strong></label>
-                    <br>
-                    <input type="date" id="dateNaiss" required><br><br><!--Date of birth-->
+      <form method="post" id="ageForm">
+        <div class="container">
+          <div class="userDate">
+            <label for="name" class="yourName"
+              ><strong>Votre nom</strong></label
+            >
+            <input type="text" class="name" id="name" required /><!--Name-->
+            <label for="dateNaiss" class="yourNaiss"
+              ><strong>Date de naissance</strong></label
+            >
+            <br />
+            <input
+              type="date"
+              id="dateNaiss"
+              required
+            /><br /><br /><!--Date of birth-->
 
-                    <button class="send" type="submit" id="sub">Calculer</button>
-                    <button class="reset" type="reset">Supprimer</button>
-                </div>
-            </div>
-        </form>
-        <!-- Affichage du résultat -->
-        <div id="result" class="result-display">
-            <!-- Le résultat de l'âge sera affiché ici -->
+            <button class="send" type="submit" id="sub">Calculer</button>
+            <button class="reset" type="reset">Supprimer</button>
+          </div>
         </div>
+      </form>
+      <!-- Affichage du résultat -->
+      <div id="result" class="result-display">
+        <!-- Le résultat de l'âge sera affiché ici -->
+      </div>
     </section>
     <script src="calculator.js"></script>
-</body>
+  </body>
 </html>
