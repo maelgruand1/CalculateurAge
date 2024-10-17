@@ -11,6 +11,7 @@
         <label for="dateNaiss">Date de naissance :</label>
         <input type="date" id="dateNaiss" required>
         <button type="submit">Calculer l'âge</button>
+        <button type="button" id="resetBtn">Réinitialiser</button>
     </form>
     
     <p id="result"></p>
@@ -62,8 +63,17 @@
             resultDisplay.textContent = `Vous avez ${years} ans, ${months} mois et ${days} jours.`;
         }
 
+        function resetForm() {
+            // Réinitialise le champ de la date de naissance et le texte du résultat
+            document.getElementById("dateNaiss").value = "";
+            document.getElementById("result").textContent = "";
+        }
+
         // Ajoute l'événement pour la soumission du formulaire
         document.getElementById("ageForm").addEventListener("submit", calculateAge);
+
+        // Ajoute l'événement pour le bouton de réinitialisation
+        document.getElementById("resetBtn").addEventListener("click", resetForm);
     </script>
 </body>
 </html>
