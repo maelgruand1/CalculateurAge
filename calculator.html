@@ -1,80 +1,222 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calcul de l'âge</title>
-</head>
-<body>
-    <h1>Calculer votre âge</h1>
-    <form id="ageForm">
-        <label for="dateNaiss">Date de naissance :</label>
-        <input type="date" id="dateNaiss" required>
-        <button type="submit">Calculer l'âge</button>
-        <button type="button" id="resetBtn">Réinitialiser</button>
-    </form>
-    
-    <p id="result"></p>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Import Montserrat font from Google Fonts */
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+      html {
+        background: linear-gradient(
+          540deg,
+          #fafe80 40%,
+          #defc80 80%,
+          #f2d97c 150%
+        );
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      body {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+
+      header {
+        background-color: #000;
+        padding: 20px;
+        color: white;
+        text-align: center;
+        width: 100%;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      header .home-btn {
+        position: absolute;
+        left: 20px; /* Posiciona el botón a la izquierda */
+        background-color: cyan;
+        color: black;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-family: 'Montserrat', serif;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.5s ease, transform 0.8s ease,
+          text-decoration 0.4s ease;
+      }
+
+      header .home-btn:hover {
+        background-color: red;
+        color: white;
+        transform: scale(1.1);
+      }
+
+      header h1 {
+        flex-grow: 1; /* Hace que el h1 ocupe el espacio restante */
+        margin: 0;
+      }
+
+      /* Continuación de tu CSS original */
+      p.txt {
+        text-align: center;
+        font-size: 30px;
+        font-family: 'Montserrat', serif;
+        font-style: italic;
+      }
+
+      .userForm {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin: 20px auto;
+        padding: 20px;
+      }
+
+      .userDate {
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        margin-bottom: 5px;
+      }
+
+      input[type='date'] {
+        width: calc(100% - 20px);
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-family: 'Montserrat', serif;
+        cursor: text;
+      }
+
+      input[type='date']:focus {
+        border-color: #ea3b20;
+        outline: none;
+      }
+
+      button.send,
+      button.reset {
+        background-color: cyan;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.5s ease, transform 0.8s ease,
+          text-decoration 0.4s ease;
+        margin-right: 10px;
+      }
+
+      button.send:hover,
+      button.reset:hover {
+        background-color: red;
+        transform: scale(1.71);
+        text-decoration: underline;
+      }
+
+      .result-display {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 26px;
+        font-weight: bold;
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <button class="home-btn" onclick="goHome()">Accueil</button>
+      <h1>Calcul de l'âge</h1>
+    </header>
+
+    <div class="userForm">
+      <form id="ageForm">
+        <div class="userDate">
+          <label for="dateNaiss">Date de naissance :</label>
+          <input type="date" id="dateNaiss" required />
+        </div>
+        <button type="submit" class="send">Calculer l'âge</button>
+        <button type="button" class="reset" id="resetBtn">Réinitialiser</button>
+      </form>
+      <p id="result" class="result-display"></p>
+    </div>
 
     <script>
-        function calculateAge(event) {
-            event.preventDefault(); // Evite que la page se recharge
+      function calculateAge(event) {
+        event.preventDefault();
+        const birthDate = new Date(document.getElementById('dateNaiss').value);
+        const today = new Date();
 
-            // Récupère la date de naissance
-            const birthDate = new Date(document.getElementById("dateNaiss").value);
-
-            // Récupère la date et l'heure actuelles
-            const today = new Date();
-            
-            // Vérifie si la date de naissance est dans le futur
-            if (birthDate > today) {
-                alert("La date d'aujourd'hui ne peut pas être antérieure à votre date de naissance.");
-                return;
-            }
-
-            // Calcul des années
-            let years = today.getFullYear() - birthDate.getFullYear();
-
-            // Vérifie si l'anniversaire n'est pas encore passé cette année
-            const monthDiff = today.getMonth() - birthDate.getMonth();
-            const dayDiff = today.getDate() - birthDate.getDate();
-            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-                years--;
-            }
-
-            // Calcul des mois
-            let months = today.getMonth() - birthDate.getMonth();
-            if (dayDiff < 0) {
-                months--;
-            }
-            if (months < 0) {
-                months += 12;
-            }
-
-            // Calcul des jours
-            let days = dayDiff;
-            if (days < 0) {
-                const previousMonth = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
-                days += previousMonth;
-            }
-
-            // Affiche le résultat
-            const resultDisplay = document.getElementById("result");
-            resultDisplay.textContent = `Vous avez ${years} ans, ${months} mois et ${days} jours.`;
+        if (birthDate > today) {
+          alert(
+            "La date d'aujourd'hui ne peut pas être antérieure à votre date de naissance."
+          );
+          return;
         }
 
-        function resetForm() {
-            // Réinitialise le champ de la date de naissance et le texte du résultat
-            document.getElementById("dateNaiss").value = "";
-            document.getElementById("result").textContent = "";
+        let years = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        const dayDiff = today.getDate() - birthDate.getDate();
+        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+          years--;
         }
 
-        // Ajoute l'événement pour la soumission du formulaire
-        document.getElementById("ageForm").addEventListener("submit", calculateAge);
+        let months = today.getMonth() - birthDate.getMonth();
+        if (dayDiff < 0) {
+          months--;
+        }
+        if (months < 0) {
+          months += 12;
+        }
 
-        // Ajoute l'événement pour le bouton de réinitialisation
-        document.getElementById("resetBtn").addEventListener("click", resetForm);
+        let days = dayDiff;
+        if (days < 0) {
+          const previousMonth = new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            0
+          ).getDate();
+          days += previousMonth;
+        }
+
+        const resultDisplay = document.getElementById('result');
+        resultDisplay.textContent = `Vous avez ${years} ans, ${months} mois et ${days} jours.`;
+      }
+
+      function resetForm() {
+        document.getElementById('dateNaiss').value = '';
+        document.getElementById('result').textContent = '';
+      }
+
+      document
+        .getElementById('ageForm')
+        .addEventListener('submit', calculateAge);
+      document.getElementById('resetBtn').addEventListener('click', resetForm);
+
+      function goHome() {
+        window.location.href = 'index.html'; // Redirige a index.html
+      }
     </script>
-</body>
+  </body>
 </html>
