@@ -1,48 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculateur d'age</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" href="calculatrice.png" />
-    <header>
-      <nav>
-        <main>
-          <a href="index.html"><button class="btn-start">Acceuil</button></a>
-        </main>
-      </nav>
-    </header>
-  </head>
-  <body>
-    <p class="txt">
-      Bienvenue cette page permet de calculer son age précisement
-    </p>
-    <!--Form to define user input-->
-    <section class="userForm">
-      <form method="post" id="ageForm">
-        <div class="container">
-          <div class="userDate">
-            <label for="dateNaiss" class="yourNaiss"
-              ><strong>Date de naissance</strong></label
-            >
-            <br />
-            <input
-              type="date"
-              id="dateNaiss"
-              required
-            /><br /><br /><!--Date of birth-->
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcul de l'âge</title>
+</head>
+<body>
+    <h1>Calculer votre âge</h1>
+    <form id="ageForm">
+        <label for="dateNaiss">Date de naissance :</label>
+        <input type="date" id="dateNaiss" required>
+        <button type="submit">Calculer l'âge</button>
+    </form>
+    
+    <p id="result"></p>
 
-            <button class="send" type="submit" id="sub">Calculer</button>
-            <button class="reset" type="reset">Supprimer</button>
-          </div>
-        </div>
-      </form>
-      <!-- Affichage du résultat -->
-      <div id="result" class="result-display">
-        <!-- Le résultat de l'âge sera affiché ici -->
-      </div>
-    </section>
-    <script src="calculator.js"></script>
-  </body>
+    <script>
+        function calculateAge(event) {
+            event.preventDefault(); // Evite que la page se recharge
+
+            // Récupère la date de naissance
+            const birthDate = new Date(document.getElementById("dateNaiss").value);
+
+            // Récupère la date et l'heure actuelles
+            const today = new Date();
+            
+            // Vérifie si la date de naissance est dans le futur
+            if (birthDate > today) {
+                alert("La date d'aujourd'hui ne peut pas être antérieure à votre date de naissance.");
+                return;
+            }
+
+            // Calcul des années
+            let years = today.getFullYear() - birthDate.getFullYear();
+
+            // Vérifie si l'anniversaire n'est pas encore passé cette année
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            const dayDiff = today.getDate() - birthDate.getDate();
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+                years--;
+            }
+
+            // Calcul des mois
+            let months = today.getMonth() - birthDate.getMonth();
+            if (dayDiff < 0) {
+                months--;
+            }
+            if (months < 0) {
+                months += 12;
+            }
+
+            // Calcul des jours
+            let days = dayDiff;
+            if (days < 0) {
+                const previousMonth = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+                days += previousMonth;
+            }
+
+            // Affiche le résultat
+            const resultDisplay = document.getElementById("result");
+            resultDisplay.textContent = `Vous avez ${years} ans, ${months} mois et ${days} jours.`;
+        }
+
+        // Ajoute l'événement pour la soumission du formulaire
+        document.getElementById("ageForm").addEventListener("submit", calculateAge);
+    </script>
+</body>
 </html>
