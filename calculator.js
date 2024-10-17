@@ -1,8 +1,7 @@
 function calculateAge(event) {
-    event.preventDefault(); // Empêche le rechargement de la page lors de la soumission du formulaire
+    event.preventDefault(); // Evita que la página se recargue al enviar el formulario
 
-    // Récupère les valeurs du nom et de la date de naissance
-    const nameInput = document.getElementById("name").value;
+    // Récupère la date de naissance
     const birthDate = new Date(document.getElementById("dateNaiss").value);
 
     // Récupère la date et l'heure actuelles
@@ -10,7 +9,7 @@ function calculateAge(event) {
     
     // Vérifie si la date de naissance est dans le futur
     if (birthDate > today) {
-        alert("Today's date cannot be earlier than your birth date.");
+        alert("La date d'aujourd'hui ne peut pas être antérieure à votre date de naissance.");
         return;
     }
 
@@ -55,7 +54,7 @@ function calculateAge(event) {
 
     // Affiche le résultat
     const resultDisplay = document.getElementById("result");
-    resultDisplay.textContent = `${nameInput}, vous avez ${years} ans, ${months} mois, ${days} jours, et ${preciseHours} heures.`;
+    resultDisplay.textContent = `Vous avez ${years} ans, ${months} mois, ${days} jours, et ${preciseHours} heures.`;
 }
 
 // Ajoute l'événement pour la soumission du formulaire
